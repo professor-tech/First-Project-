@@ -1038,6 +1038,136 @@
             margin-top: 20px;
         }
 
+        /* Admin Panel Styles */
+        .admin-panel {
+            padding: var(--section-padding);
+            background-color: var(--gray-dark);
+        }
+
+        .admin-panel-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--gray-medium);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .admin-panel h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .admin-form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .admin-form-group input,
+        .admin-form-group textarea,
+        .admin-form-group select {
+            padding: 12px 15px;
+            background-color: var(--gray-light);
+            border: 1px solid transparent;
+            border-radius: var(--border-radius);
+            color: var(--secondary);
+            font-family: var(--font-primary);
+            transition: var(--transition);
+        }
+
+        .admin-form-group input:focus,
+        .admin-form-group textarea:focus,
+        .admin-form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+        }
+
+        .admin-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .admin-submit-btn {
+            background-color: var(--accent);
+            color: var(--primary);
+            padding: 14px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .admin-submit-btn:hover {
+            background-color: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .admin-courses-list {
+            margin-top: 40px;
+        }
+
+        .admin-courses-list h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .admin-course-item {
+            background-color: var(--gray-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-course-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .admin-course-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-course-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .admin-edit-btn {
+            background-color: var(--accent-alt);
+            color: var(--primary);
+        }
+
+        .admin-delete-btn {
+            background-color: #EF4444;
+            color: var(--primary);
+        }
+
+        .admin-edit-btn:hover,
+        .admin-delete-btn:hover {
+            opacity: 0.8;
+        }
+
         /* Responsive Styles */
         @media (max-width: 1200px) {
             .nav-menu {
@@ -1131,6 +1261,17 @@
             .admin-stats {
                 grid-template-columns: 1fr;
             }
+            
+            .admin-course-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .admin-course-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1147,6 +1288,10 @@
             
             .testimonial-card {
                 padding: 30px 20px;
+            }
+            
+            .admin-panel-content {
+                padding: 25px;
             }
         }
     </style>
@@ -1224,6 +1369,42 @@
                             <div class="stat-number">5+</div>
                             <div class="stat-label">Years Experience</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel Section -->
+    <section class="admin-panel" id="admin-panel">
+        <div class="container">
+            <h2 class="section-title">Admin <span class="text-gradient">Panel</span></h2>
+            <div class="admin-panel-content">
+                <h3>Add New Course</h3>
+                <form class="admin-form" id="admin-course-form">
+                    <div class="admin-form-group">
+                        <label for="course-title">Course Title</label>
+                        <input type="text" id="course-title" name="course-title" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="course-description">Course Description</label>
+                        <textarea id="course-description" name="course-description" required></textarea>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="course-icon">Course Icon (Font Awesome class)</label>
+                        <input type="text" id="course-icon" name="course-icon" placeholder="fas fa-code" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="course-price">Course Price (GHS)</label>
+                        <input type="number" id="course-price" name="course-price" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="admin-submit-btn">Add Course</button>
+                </form>
+                
+                <div class="admin-courses-list">
+                    <h3>Existing Courses</h3>
+                    <div id="admin-courses-container">
+                        <!-- Courses will be dynamically added here -->
                     </div>
                 </div>
             </div>
@@ -1326,7 +1507,7 @@
     <div class="gradient-bg"></div>
     <div class="container">
         <h2 class="section-title">Our <span class="text-gradient">Online Courses</span></h2>
-        <div class="courses-grid">
+        <div class="courses-grid" id="courses-container">
             <!-- Existing courses -->
             <div class="course-card">
                 <div class="course-icon">
@@ -1622,6 +1803,7 @@
                         <input type="hidden" name="_subject" value="New Contact Form Submission">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
                         <div class="form-group">
                             <input type="text" class="form-control" name="name" placeholder="Your Name" required>
                         </div>
@@ -1703,6 +1885,7 @@
                 <input type="hidden" name="_subject" value="New Registration Form Submission">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
                 <div class="form-group">
                     <input type="text" class="form-control" name="name" placeholder="Full Name" required>
                 </div>
@@ -1740,6 +1923,7 @@
                 <input type="hidden" name="_subject" value="New Course Enrollment">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
                 <input type="hidden" name="course" id="enrollment-course">
                 <input type="hidden" name="price" id="enrollment-price">
                 <div class="form-group">
@@ -1948,6 +2132,179 @@
                 modals.enrollment.style.display = 'flex';
             });
         });
+
+        // Admin Panel Functionality
+        const adminCourseForm = document.getElementById('admin-course-form');
+        const coursesContainer = document.getElementById('courses-container');
+        const adminCoursesContainer = document.getElementById('admin-courses-container');
+
+        // Load existing courses from localStorage
+        let courses = JSON.parse(localStorage.getItem('adminCourses')) || [];
+
+        // Function to render courses in the admin panel
+        function renderAdminCourses() {
+            adminCoursesContainer.innerHTML = '';
+            
+            if (courses.length === 0) {
+                adminCoursesContainer.innerHTML = '<p>No courses added yet.</p>';
+                return;
+            }
+            
+            courses.forEach((course, index) => {
+                const courseItem = document.createElement('div');
+                courseItem.className = 'admin-course-item';
+                courseItem.innerHTML = `
+                    <div class="admin-course-info">
+                        <h4>${course.title}</h4>
+                        <p>${course.description}</p>
+                        <p><strong>Price:</strong> GH₵${course.price}</p>
+                    </div>
+                    <div class="admin-course-actions">
+                        <button class="admin-edit-btn" data-index="${index}">Edit</button>
+                        <button class="admin-delete-btn" data-index="${index}">Delete</button>
+                    </div>
+                `;
+                adminCoursesContainer.appendChild(courseItem);
+            });
+            
+            // Add event listeners for edit and delete buttons
+            document.querySelectorAll('.admin-edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    editCourse(index);
+                });
+            });
+            
+            document.querySelectorAll('.admin-delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    deleteCourse(index);
+                });
+            });
+        }
+
+        // Function to render courses in the main courses section
+        function renderCourses() {
+            // Keep the original courses
+            const originalCourses = coursesContainer.innerHTML;
+            
+            // Add admin courses
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-icon">
+                        <i class="${course.icon}"></i>
+                    </div>
+                    <h3 class="course-title">${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-price">GH₵${course.price}</div>
+                    <div class="currency-selector">
+                        <select class="currency-select" data-course="${course.title.toLowerCase().replace(/\s+/g, '-')}">
+                            <option value="GHS">GHS: GH₵${course.price}</option>
+                            <option value="USD">USD: $${Math.round(course.price / 12)}</option>
+                            <option value="EUR">EUR: €${Math.round(course.price / 13)}</option>
+                            <option value="GBP">GBP: £${Math.round(course.price / 15.4)}</option>
+                            <option value="NGN">NGN: ₦${Math.round(course.price * 116.7)}</option>
+                            <option value="KES">KES: KSh ${Math.round(course.price * 10.6)}</option>
+                            <option value="ZAR">ZAR: R${Math.round(course.price * 1.5)}</option>
+                            <option value="INR">INR: ₹${Math.round(course.price * 6.8)}</option>
+                            <option value="AUD">AUD: A$${Math.round(course.price / 8)}</option>
+                            <option value="CAD">CAD: C$${Math.round(course.price / 8.9)}</option>
+                        </select>
+                    </div>
+                    <a href="#" class="btn btn-yellow enroll-btn" data-course="${course.title}" data-price="${course.price}">Enroll Now</a>
+                `;
+                coursesContainer.appendChild(courseCard);
+            });
+            
+            // Reattach event listeners to all enroll buttons
+            document.querySelectorAll('.enroll-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const course = button.getAttribute('data-course');
+                    const price = button.getAttribute('data-price');
+                    
+                    document.getElementById('enrollment-course').value = course;
+                    document.getElementById('enrollment-price').value = price;
+                    
+                    modals.enrollment.style.display = 'flex';
+                });
+            });
+            
+            // Reattach event listeners to currency selectors
+            document.querySelectorAll('.currency-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const course = this.getAttribute('data-course');
+                    const currency = this.value;
+                    console.log(`Selected ${currency} for ${course} course`);
+                });
+            });
+        }
+
+        // Function to add a new course
+        function addCourse(title, description, icon, price) {
+            const newCourse = {
+                title,
+                description,
+                icon,
+                price
+            };
+            
+            courses.push(newCourse);
+            localStorage.setItem('adminCourses', JSON.stringify(courses));
+            
+            renderAdminCourses();
+            renderCourses();
+        }
+
+        // Function to edit a course
+        function editCourse(index) {
+            const course = courses[index];
+            
+            // Populate the form with course data
+            document.getElementById('course-title').value = course.title;
+            document.getElementById('course-description').value = course.description;
+            document.getElementById('course-icon').value = course.icon;
+            document.getElementById('course-price').value = course.price;
+            
+            // Remove the course from the list
+            courses.splice(index, 1);
+            localStorage.setItem('adminCourses', JSON.stringify(courses));
+            
+            renderAdminCourses();
+            renderCourses();
+        }
+
+        // Function to delete a course
+        function deleteCourse(index) {
+            if (confirm('Are you sure you want to delete this course?')) {
+                courses.splice(index, 1);
+                localStorage.setItem('adminCourses', JSON.stringify(courses));
+                
+                renderAdminCourses();
+                renderCourses();
+            }
+        }
+
+        // Handle form submission
+        adminCourseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('course-title').value;
+            const description = document.getElementById('course-description').value;
+            const icon = document.getElementById('course-icon').value;
+            const price = document.getElementById('course-price').value;
+            
+            addCourse(title, description, icon, price);
+            
+            // Reset the form
+            adminCourseForm.reset();
+        });
+
+        // Initialize the admin panel
+        renderAdminCourses();
+        renderCourses();
     </script>
 </body>
 </html>
